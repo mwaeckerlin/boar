@@ -13,6 +13,10 @@ RUN apt-get update
 RUN apt-get -y install python wget openssh-server mcrypt
 RUN wget -O- ${BOAR_SOURCE} | tar xz
 RUN mkdir /var/run/sshd
+RUN sed -i 's,passwd:.*,passwd: ldap compat,' /etc/nsswitch.conf
+RUN sed -i 's,group:.*,group: ldap compat,' /etc/nsswitch.conf
+RUN sed -i 's,shadow:.*,shadow: ldap compat,' /etc/nsswitch.conf
+RUN echo 'session required    pam_mkhomedir.so skel=/etc/skel umask=0022' >> /etc/pam.d/common-session
 #RUN sed -i 's,^ *PermitEmptyPasswords .*,PermitEmptyPasswords yes,' /etc/ssh/sshd_config
 #RUN sed -i '1iauth sufficient pam_permit.so' /etc/pam.d/sshd
 USER root
