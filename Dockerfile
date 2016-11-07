@@ -4,6 +4,7 @@ ENV TERM xterm
 
 ENV BOAR_USER "boar"
 ENV BOAR_GROUP "boar"
+ENV SSH_PUBKEY ""
 ENV BOAR_SOURCE "https://bitbucket.org/mats_ekberg/boar/downloads/boar.16-Nov-2012.tar.gz"
 ENV LANG "en_US.UTF-8"
 
