@@ -21,4 +21,5 @@ WORKDIR /boar
 ADD start.sh /start.sh
 CMD /start.sh
 
+VOLUME /etc/ssh
 VOLUME /boar
