@@ -3,7 +3,7 @@
 /config-ldap.sh
 /etc/init.d/nscd start
 if ! id "$BOAR_USER" 2> /dev/null > /dev/null; then
-    echo "setup /boar ..."
+    echo "create boar user ..."
     useradd -ms /bin/bash -d "/home/$BOAR_USER" -g "$BOAR_GROUP" "$BOAR_USER"
 fi
 
@@ -12,8 +12,8 @@ chown -R "${BOAR_USER}.${BOAR_GROUP}" /boar
 chmod -R g+rwx /boar
 find /boar -type d -exec chmod g+rwx {} \;
 
-echo "configure ssh"
 if test -n "$SSH_PUBKEY" -a ! grep -q "$SSH_PUBKEY" "/home/${BOAR_USER}/.ssh"; then
+    echo "configure ssh"
     mkdir "/home/${BOAR_USER}/.ssh"
     echo "$SSH_PUBKEY" >> "/home/${BOAR_USER}/.ssh/authorized_keys"
     chown -R "${BOAR_USER}.${BOAR_GROUP}" "/home/${BOAR_USER}/.ssh"
