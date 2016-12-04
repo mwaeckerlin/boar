@@ -13,10 +13,10 @@ chmod -R g+rwx /boar
 find /boar -type d -exec chmod g+rwx {} \;
 
 echo "configure ssh"
-if test -n "$SSH_PUBKEY" -a ! -d ~${BOAR_USER}/.ssh; then
-    mkdir ~${BOAR_USER}/.ssh
-    echo "$SSH_PUBKEY" > ~${BOAR_USER}/.ssh/authorized_keys
-    chown -R "${BOAR_USER}.${BOAR_GROUP}" ~${BOAR_USER}/.ssh
+if test -n "$SSH_PUBKEY" -a ! -d "/home/${BOAR_USER}/.ssh"; then
+    mkdir "/home/${BOAR_USER}/.ssh"
+    echo "$SSH_PUBKEY" > "/home/${BOAR_USER}/.ssh/authorized_keys"
+    chown -R "${BOAR_USER}.${BOAR_GROUP}" "/home/${BOAR_USER}/.ssh"
 fi
 
 echo "ready, starting ssh daemon..."
