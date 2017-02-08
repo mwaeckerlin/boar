@@ -12,7 +12,7 @@ chown -R "${BOAR_USER}.${BOAR_GROUP}" /boar
 chmod -R g+rwx /boar
 find /boar -type d -exec chmod g+rwx {} \;
 
-if test -n "$SSH_PUBKEY" && ! grep -q "$SSH_PUBKEY" "/home/${BOAR_USER}/.ssh"; then
+if test -n "$SSH_PUBKEY" && ! grep -q "$SSH_PUBKEY" "/home/${BOAR_USER}/.ssh/authorized_keys"; then
     echo "configure ssh"
     mkdir "/home/${BOAR_USER}/.ssh"
     echo "$SSH_PUBKEY" >> "/home/${BOAR_USER}/.ssh/authorized_keys"
