@@ -20,4 +20,14 @@ if test -n "$SSH_PUBKEY" -a ! grep -q "$SSH_PUBKEY" "/home/${BOAR_USER}/.ssh"; t
 fi
 
 echo "ready, starting ssh daemon..."
-/usr/sbin/sshd $SSHOPTIONS -D
+#/usr/sbin/sshd $SSHOPTIONS -D
+/usr/sbin/sshd $SSHOPTIONS
+
+echo "start fixing permissions..."
+inotifywait -r --format '%w' -e modify,attrib,move,create,delete /boar |
+    while read p; do
+        if test -e "$p"; then
+            echo "fix: $p"
+            chown -R "${BOAR_USER}.${BOAR_GROUP}" "$p"
+        fi
+    done
