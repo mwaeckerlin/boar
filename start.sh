@@ -28,7 +28,8 @@ inotifywait -m -r --format '%e %w%f' -e modify,moved_to,create @/boar/tmp /boar 
     while read e p; do
         echo -n "$(date) fix permissions: $e → $p... "
         if test -e "$p"; then
-            chown -R "${BOAR_USER}.${BOAR_GROUP}" "$p" && echo "done." || echo "failed."
+            chown -R "${BOAR_USER}.${BOAR_GROUP}" "$p" && chmod -R g+rwx "$p" \
+                && echo "done." || echo "failed."
         else
             echo "ignored."
         fi
