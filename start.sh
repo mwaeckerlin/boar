@@ -24,10 +24,12 @@ echo "ready, starting ssh daemon..."
 /usr/sbin/sshd $SSHOPTIONS
 
 echo "start fixing permissions..."
-inotifywait -m -r --format '%w' -e modify,attrib,moved_to,create /boar |
-    while read p; do
+inotifywait -m -r --format '%e %w%f' -e modify,attrib,moved_to,create @/boar/tmp /boar |
+    while read e p; do
+        echo -n "$(date) fix permissions: $e → $p... "
         if test -e "$p"; then
-            echo -n "fix: $p... "
             chown -R "${BOAR_USER}.${BOAR_GROUP}" "$p" && echo "done." || echo "failed."
+        else
+            echo "ignored."
         fi
     done
