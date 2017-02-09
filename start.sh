@@ -24,7 +24,7 @@ echo "ready, starting ssh daemon..."
 /usr/sbin/sshd $SSHOPTIONS
 
 echo "start fixing permissions..."
-inotifywait -m -r --format '%e %w%f' -e modify,attrib,moved_to,create @/boar/tmp /boar |
+inotifywait -m -r --format '%e %w%f' -e modify,moved_to,create @/boar/tmp /boar |
     while read e p; do
         echo -n "$(date) fix permissions: $e → $p... "
         if test -e "$p"; then
